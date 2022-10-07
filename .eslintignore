@@ -1,0 +1,9 @@
+**/node_modules/*
+**/out/*
+**/.next/*
+storybook-static
+build-storybook.log
+# !.storybook/main.js
+# !.storybook/main.ts
+# !.storybook/preview.tsx
+# !.storybook/theme.ts

@@ -1,0 +1,78 @@
+import { vi } from 'vitest';
+import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
+import { render } from '../../../../test/render';
+import { Redirect } from './redirect';
+
+const fakeRouter = {
+  replace: vi.fn(),
+  push: vi.fn(),
+};
+vi.mock('next/router', () => ({
+  useRouter: () => fakeRouter,
+}));
+
+describe('Redirect', () => {
+  test('push', () => {
+    fakeRouter.push = vi.fn();
+    fakeRouter.replace = vi.fn();
+    render(<Redirect to="/foo" />);
+    expect(fakeRouter.push).toHaveBeenCalledTimes(1);
+    expect(fakeRouter.push.mock.calls[0][0]).toEqual('/foo');
+    expect(fakeRouter.push.mock.calls[0][1]).toEqual('/foo');
+    expect(fakeRouter.replace).not.toHaveBeenCalled();
+  });
+
+  test('replace', () => {
+    fakeRouter.push = vi.fn();
+    fakeRouter.replace = vi.fn();
+    render(<Redirect to="/foo" replace />);
+    expect(fakeRouter.replace).toHaveBeenCalledTimes(1);
+    expect(fakeRouter.replace.mock.calls[0][0]).toEqual('/foo');
+    expect(fakeRouter.replace.mock.calls[0][1]).toEqual('/foo');
+    expect(fakeRouter.push).not.toHaveBeenCalled();
+  });
+
+  test('dynamic route (as)', () => {
+    fakeRouter.push = vi.fn();
+    render(<Redirect to="/foo/[slug]" as="/foo/bar" />);
+    expect(fakeRouter.push).toHaveBeenCalledTimes(1);
+    expect(fakeRouter.push.mock.calls[0][0]).toEqual('/foo/[slug]');
+    expect(fakeRouter.push.mock.calls[0][1]).toEqual('/foo/bar');
+  });
+
+  test('external URL - push', () => {
+    fakeRouter.push = vi.fn();
+    fakeRouter.replace = vi.fn();
+    // @ts-ignore
+    delete window.location;
+    window.location = Object.assign(new URL('http://localhost'), {
+      assign: vi.fn(),
+      replace: vi.fn(),
+    }) as any;
+    render(<Redirect to="https://example.com" external />);
+    expect(fakeRouter.push).not.toHaveBeenCalled();
+    expect(fakeRouter.replace).not.toHaveBeenCalled();
+    expect(window.location.assign).toHaveBeenCalledWith(
+      'https://example.com'
+    );
+    expect(window.location.replace).not.toHaveBeenCalled();
+  });
+  test('external URL - replace', () => {
+    fakeRouter.push = vi.fn();
+    fakeRouter.replace = vi.fn();
+    // @ts-ignore
+    delete window.location;
+    window.location = Object.assign(new URL('http://localhost'), {
+      assign: vi.fn(),
+      replace: vi.fn(),
+    }) as any;
+    render(<Redirect to="https://example.com" external replace />);
+    expect(fakeRouter.push).not.toHaveBeenCalled();
+    expect(fakeRouter.replace).not.toHaveBeenCalled();
+    expect(window.location.replace).toHaveBeenCalledWith(
+      'https://example.com'
+    );
+    expect(window.location.assign).not.toHaveBeenCalled();
+  });
+});

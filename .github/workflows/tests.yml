@@ -1,0 +1,27 @@
+name: Lint Typecheck Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.10.0'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Format
+        run: yarn format
+      - name: Lint
+        run: yarn lint
+      # - name: Typecheck
+      #   run: yarn typecheck
+      - name: Run Tests
+        run: yarn test

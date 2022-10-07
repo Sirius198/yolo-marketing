@@ -1,0 +1,28 @@
+{
+  "recommendations": [
+    "mikestead.dotenv",
+    "dbaeumer.vscode-eslint",
+    "graphql.vscode-graphql-syntax",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml",
+    "leodevbro.blockman",
+    "mgmcdermott.vscode-language-babel",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "prisma.prisma",
+    "bradlc.vscode-tailwindcss",
+    "stripe.vscode-stripe",
+    "tamasfe.even-better-toml",
+    "denoland.vscode-deno",
+    "unifiedjs.vscode-mdx",
+    "ban.spellright",
+    "naumovs.color-highlight",
+    "mrmlnc.vscode-json5",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "christian-kohler.npm-intellisense",
+    "mariusschulz.yarn-lock-syntax",
+    "vscode-icons-team.vscode-icons",
+    "styled-components.vscode-styled-components"
+  ]
+}
