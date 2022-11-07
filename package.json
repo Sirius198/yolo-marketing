@@ -58,7 +58,7 @@
     "clsx": "^1.2.1",
     "dayjs": "^1.11.5",
     "focus-visible": "^5.2.0",
-    "framer-motion": "^7.5.2",
+    "framer-motion": "^7.6.5",
     "lodash-es": "^4.17.21",
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
